@@ -26,3 +26,8 @@ Version: Linux 5.4.302-qgki
 
 ### Peripherals
 - **USB Video Class:** Enabled `CONFIG_USB_CONFIGFS_F_UVC=y` for hardware webcam/video output support.
+
+### I/O Storage Schedulers
+- **Kyber & MQ-Deadline Schedulers:**
+  - Enabled `CONFIG_MQ_IOSCHED_KYBER=y` for self-tuning low-latency multi-queue storage scheduling.
+  - Enabled `CONFIG_MQ_IOSCHED_DEADLINE=y`.
