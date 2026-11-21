@@ -68,7 +68,7 @@ ifeq ($(LOCAL_GIT_EXISTS),0)
 $(info -- Can't find $(REPO_NAME) git submodule!)
 $(info -- If you are using bazel to build this kernel,)
 $(info -- Please go to Kbuild and change KSU_SRC to the absolute path of the KSU kernel folder.)
-$(error You should use $(REPO_NAME) as a git submodule instead of copying code directly)
+$(info -- KIC OS: BakaSU is vendored, not a submodule; using a pinned version.)
 endif
 
 ifdef KBUILD_EXTMOD
@@ -76,7 +76,7 @@ include $(KSU_SRC)/tools/ddk_compatible.mk
 endif
 
 $(shell cd $(KSU_SRC); [ -f ../.git/shallow ] && $(GIT_BIN) fetch --unshallow)
-KSU_LOCAL_VERSION := $(shell cd $(KSU_SRC); $(GIT_BIN) rev-list --count HEAD)
+KSU_LOCAL_VERSION := $(if $(filter 1,$(LOCAL_GIT_EXISTS)),$(shell cd $(KSU_SRC); $(GIT_BIN) rev-list --count HEAD),4557)
 KSU_VERSION := $(shell expr 30000 + $(KSU_LOCAL_VERSION) + 700)
 
 KSU_TAG_NAME    := $(shell cd $(KSU_SRC); $(GIT_BIN) describe --abbrev=0 --tags 2>/dev/null || echo "v4.1.0")
